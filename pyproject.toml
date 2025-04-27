@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "nba-playoff-stats-visualizer"
+version = "0.1.0"
+description = "NBA Playoff Statistics Visualizer for enhancing sports betting strategy"
+authors = ["housefinch <housefinch1753@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+streamlit = "^1.39.0"
+pandas = "^2.1.0"
+plotly = "^6.0.0"
+nba_api = "^1.3.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+app = "nba_playoff_stats_visualizer.app:main" 
