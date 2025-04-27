@@ -229,7 +229,6 @@ def app():
                     # This ensures the latest games (highest game numbers) are at the bottom of each stack
                     player_game_points_long = player_game_points_long.sort_values(
                         ['Player', 'Game Number'], ascending=[True, False])
-                    print(player_game_points_long)
                     # Create stacked bar chart
                     fig = px.bar(
                         player_game_points_long,
