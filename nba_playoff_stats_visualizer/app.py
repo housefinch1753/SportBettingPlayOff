@@ -303,7 +303,7 @@ def app():
                 # Add a selector for the statistic to display
                 stat_option = st.radio(
                     "Select statistic to analyze:",
-                    ["Points", "Rebounds", "3-Points", "Points+Rebounds",
+                    ["Points", "Rebounds", "Assists", "3-Points", "Points+Rebounds",
                      "Points+Rebounds+Assists (PRA)"],
                     horizontal=True
                 )
@@ -326,6 +326,10 @@ def app():
                     display_stat = 'PRA'
                     color_scale = 'Viridis'
                     title_prefix = 'Points+Rebounds+Assists'
+                elif stat_option == "Assists":
+                    display_stat = 'Assists'
+                    color_scale = 'Greens'
+                    title_prefix = 'Assists'
                 elif stat_option == "Points":
                     display_stat = 'Points'
                     color_scale = 'Reds'
