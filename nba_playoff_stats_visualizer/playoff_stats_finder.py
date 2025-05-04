@@ -4,7 +4,7 @@ from typing import Dict, List
 
 from nba_api.live.nba.endpoints import BoxScore
 from nba_api.stats.endpoints import LeagueGameFinder
-from nba_api.stats.library.parameters import SeasonTypeAllStar, SeasonType, SeasonTypePlayoffs
+from nba_api.stats.library.parameters import SeasonTypePlayoffs
 
 logger = logging.getLogger(__name__)
 
