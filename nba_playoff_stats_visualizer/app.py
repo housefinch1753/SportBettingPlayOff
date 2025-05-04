@@ -3,6 +3,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
+from data_access.g_sheet_connection import send_feedback_to_sheets
 from playoff_stats_finder import TeamGameFinder
 
 
@@ -70,16 +71,45 @@ def app():
         "Select Team", list(team_names.keys()))
     selected_team = team_names[selected_team_name]
 
-    # Add a feedback section to the sidebar (greyed out - coming soon)
+    # Add a feedback section to the sidebar
     st.sidebar.markdown("---")  # Add a separator
-    st.sidebar.header("Leave Feedback")
-    st.sidebar.markdown(
-        "<div style='color: gray; padding: 10px; border: 1px solid #ddd; border-radius: 5px;'>"
-        "<p style='margin-bottom: 10px;'><b>Feedback Feature - Coming Soon!</b></p>"
-        "<p>We're currently working on implementing a feedback system to improve your experience.</p>"
-        "</div>",
-        unsafe_allow_html=True
-    )
+    st.sidebar.header("Welcome to Leave Feedback")
+
+    # Create a form for the feedback
+    with st.sidebar.form(key="feedback_form"):
+        st.markdown(
+            "<p>Help us improve this tool by sharing your feedback!</p>", unsafe_allow_html=True)
+
+        # Optional name field
+        name = st.text_input("Your Name (Optional)")
+
+        # Feedback text area
+        feedback = st.text_area("Your Feedback", height=150, max_chars=500,
+                                placeholder="Please share your thoughts, suggestions, or report any issues...")
+
+        # Submit button
+        submit_button = st.form_submit_button(label="Submit Feedback")
+
+        # Handle form submission
+        if submit_button:
+            if feedback:  # Make sure there's feedback text
+                feedback_data = {
+                    "name": name if name else "Anonymous",
+                    "feedback": feedback,
+                }
+
+                # Show a spinner while submitting
+                with st.spinner("Submitting your feedback..."):
+                    success = send_feedback_to_sheets(feedback_data)
+
+                if success:
+                    st.success(
+                        "Thank you for your feedback! Your input helps us improve.")
+                else:
+                    st.error(
+                        "There was an issue submitting your feedback. Please try again later.")
+            else:
+                st.warning("Please enter some feedback before submitting.")
 
     # Add loading indicator
     with st.spinner("Fetching playoff statistics..."):
@@ -123,7 +153,7 @@ def app():
                 # Group by unique game dates and assign game numbers
                 unique_game_dates = df['Game Date'].unique()
                 game_date_to_number = {date: i + 1 for i,
-                                       date in enumerate(unique_game_dates)}
+                date in enumerate(unique_game_dates)}
                 df['Game Number'] = df['Game Date'].map(game_date_to_number)
 
                 # Extract numeric minutes - handle potential format issues
@@ -150,7 +180,7 @@ def app():
 
                 st.subheader("Series Overview")
                 series_info = df[['Game Date', 'Matchup', 'Opponent']
-                                 ].drop_duplicates().reset_index(drop=True)
+                ].drop_duplicates().reset_index(drop=True)
                 series_info['Game Date'] = series_info['Game Date'].dt.strftime(
                     '%Y-%m-%d')
 
@@ -415,10 +445,10 @@ def app():
                     for player in players:
                         for game_date in game_dates:
                             player_game_data = df[(df['Player'] == player) & (
-                                df['Game Date'] == game_date)]
+                                    df['Game Date'] == game_date)]
                             if not player_game_data.empty:
                                 heatmap_data.at[player,
-                                                game_date] = player_game_data['Points'].sum()
+                                game_date] = player_game_data['Points'].sum()
                             else:
                                 heatmap_data.at[player, game_date] = 0
 
