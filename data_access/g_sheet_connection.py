@@ -40,6 +40,7 @@ def send_feedback_to_sheets(feedback_data):
         row = [
             timestamp_utc,
             feedback_data.get("name", "Anonymous"),
+            feedback_data.get("email", "N/A"),
             feedback_data.get("feedback", ""),
         ]
         # Append the row to the sheet
