@@ -27,7 +27,7 @@ with col1:
             <h3 style="font-size: 24px; font-weight: 600;">📊Statistics Visualizer-Playoff</h3>
             """, unsafe_allow_html=True)
         with col1_2:
-            st.page_link("nba_playoff_stats_visualizer/visualization.py",
+            st.page_link("nba_playoff_stats_visualizer/playoff_visualizer_page.py",
             label="Show me")
 
         st.markdown("""
