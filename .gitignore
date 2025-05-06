@@ -2,5 +2,4 @@
 .DS_Store
 *.pyc
 
-.streamlit/housefinch-co-83062ffc4f69.json
 .streamlit/secrets.toml
