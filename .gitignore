@@ -1,5 +1,7 @@
 .idea
 .DS_Store
 *.pyc
+.vscode
 
 .streamlit/secrets.toml
+database/config.py

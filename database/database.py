@@ -20,7 +20,7 @@ class Database:
             connection_string: SQLAlchemy database connection string
             echo: Whether to echo SQL queries (useful for debugging)
         """
-        self.engine = create_engine(connection_string, echo=echo)
+        self.engine = create_engine(connection_string, connect_args={"options": "-c timezone=utc"}, echo=echo)
         self.Session = sessionmaker(bind=self.engine)
 
     def create_tables(self):

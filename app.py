@@ -1,6 +1,18 @@
+import logging
+
 import streamlit as st
 
 from ui_component.feedback import render_feedback_sidebar
+
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.StreamHandler()
+    ]
+)
 
 # Set page configuration
 st.set_page_config(
