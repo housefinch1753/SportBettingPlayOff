@@ -60,17 +60,17 @@ def main():
 
         with col1:
             st.markdown("#### Over Bet Example:")
-            stats_baseline = 20.0
+            stats_baseline = 20
             st.markdown(f"**Player's Baseline**: {stats_baseline} points")
 
             example_data = [
-                {"Line": stats_baseline * 0.85, "Direction": "🔥 Strong Positive",
+                {"Line": int(stats_baseline * 0.85), "Direction": "🔥 Strong Positive",
                     "Calculation": f"{stats_baseline} × (1 - 0.1) = {stats_baseline * 0.9} (Line < Threshold)"},
-                {"Line": stats_baseline * 0.95, "Direction": "👍 Positive",
+                {"Line": int(stats_baseline * 0.95), "Direction": "👍 Positive",
                     "Calculation": f"{stats_baseline} × (1 - 0.03) = {stats_baseline * 0.97} (Line < Threshold)"},
                 {"Line": stats_baseline, "Direction": "🔮 Neutral",
                     "Calculation": f"Line is within ±3% of {stats_baseline}"},
-                {"Line": stats_baseline * 1.05, "Direction": "❌ Negative",
+                {"Line": int(stats_baseline * 1.05), "Direction": "❌ Negative",
                     "Calculation": f"{stats_baseline} × (1 + 0.03) = {stats_baseline * 1.03} (Line > Threshold)"}
             ]
 
@@ -91,13 +91,13 @@ def main():
             st.markdown(f"**Player's Baseline**: {stats_baseline} points")
 
             example_data = [
-                {"Line": stats_baseline * 1.15, "Direction": "🔥 Strong Positive",
+                {"Line": int(stats_baseline * 1.15), "Direction": "🔥 Strong Positive",
                     "Calculation": f"{stats_baseline} × (1 + 0.1) = {stats_baseline * 1.1} (Line > Threshold)"},
-                {"Line": stats_baseline * 1.05, "Direction": "👍 Positive",
+                {"Line": int(stats_baseline * 1.05), "Direction": "👍 Positive",
                     "Calculation": f"{stats_baseline} × (1 + 0.03) = {stats_baseline * 1.03} (Line > Threshold)"},
                 {"Line": stats_baseline, "Direction": "🔮 Neutral",
                     "Calculation": f"Line is within ±3% of {stats_baseline}"},
-                {"Line": stats_baseline * 0.95, "Direction": "❌ Negative",
+                {"Line": int(stats_baseline * 0.95), "Direction": "❌ Negative",
                     "Calculation": f"{stats_baseline} × (1 - 0.03) = {stats_baseline * 0.97} (Line < Threshold)"}
             ]
 
