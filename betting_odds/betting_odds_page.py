@@ -231,7 +231,7 @@ def get_future_matchup() -> Optional[dict[str, Matchup]]:
 @st.cache_resource(ttl=86400)
 def calculate_summary_stats_for_players(list_of_players: list[str], season, season_type) -> dict[str, PlayerStatsSummary]:
     player_stats_by_name = player_stats_service.query_player_stats(
-        list_of_players, '2024-25', SeasonTypeAllStar.playoffs)
+        list_of_players, season, season_type)
     stats_summary_by_name = player_stats_service.summarize_player_stats(
         player_stats_by_name)
     return stats_summary_by_name
