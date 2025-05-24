@@ -137,22 +137,28 @@ with col1:
 
 
 with col2:
-    st.markdown("""
-    <h3 style="font-size: 24px; font-weight: 600;">🚧 Working In Progress: Betting Odds Analysis</h3>
-    """, unsafe_allow_html=True)
-    st.markdown("""
-    <div style="font-size: 24px; background-color: #f0f2f6; padding: 20px; border-radius: 10px; min-height: 300px; height: auto; overflow: auto; opacity: 0.7; color: #666;">
-        <h4 style="color: #6699cc;">Real-time Odds Comparison</h4>
-        <ul>
-            <li>Compare odds across major sportsbooks</li>
-            <li>Track line movements to spot value</li>
-            <li>Player prop betting insights</li>
-        </ul>
-        <p style="font-weight: bold; font-size: 18px; margin-top: 30px;">
-        Make more informed betting decisions by combining statistical data with real-time odds.
-        </p>
-    </div>
-    """, unsafe_allow_html=True)
+    with st.container():
+        col2_1, col2_2 = st.columns([1, 1], vertical_alignment="center")
+        with col2_1:
+            st.markdown("""
+            <h3 style="font-size: 24px; font-weight: 600;"> 🟢 LIVE: Betting Odds Analysis</h3>
+            """, unsafe_allow_html=True)
+        with col2_2:
+            st.page_link("betting_odds/betting_odds_page.py",
+                         label="Show me")
+        st.markdown("""
+        <div style="font-size: 24px; background-color: #f0f2f6; padding: 20px; border-radius: 10px; min-height: 300px; height: auto; overflow: auto;">
+            <h4 style="color: #0066cc;">Real-time Odds Comparison</h4>
+            <ul>
+                <li>Compare odds across major sportsbooks</li>
+                <li>Track line movements to spot value</li>
+                <li>Player prop betting insights</li>
+            </ul>
+            <p style="font-weight: bold; font-size: 18px; margin-top: 30px;">
+            Make more informed betting decisions by combining statistical data with real-time odds.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Getting started section
 st.header("Getting Started")
