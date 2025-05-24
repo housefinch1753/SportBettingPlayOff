@@ -4,4 +4,3 @@
 .vscode
 
 .streamlit/secrets.toml
-database/config.py
