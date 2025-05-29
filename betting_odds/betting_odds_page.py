@@ -228,10 +228,10 @@ def get_future_matchup() -> Optional[dict[str, Matchup]]:
     return matchup_by_derived_name
 
 
-@st.cache_resource(ttl=86400)
+@st.cache_resource(ttl=3600)
 def calculate_summary_stats_for_players(list_of_players: list[str], season, season_type) -> dict[str, PlayerStatsSummary]:
     player_stats_by_name = player_stats_service.query_player_stats(
-        list_of_players, '2024-25', SeasonTypeAllStar.playoffs)
+        list_of_players, season, season_type)
     stats_summary_by_name = player_stats_service.summarize_player_stats(
         player_stats_by_name)
     return stats_summary_by_name
@@ -293,13 +293,6 @@ def render_team_props(
         st.info(f"No player props available for {team_name}")
         return
 
-    # Define value priority for sorting (Strong positive -> Positive -> Neutral -> Negative)
-    value_priority = {
-        "strong positive": 1,
-        "positive": 2,
-        "neutral": 3,
-        "negative": 4
-    }
 
     for player_name, props in team_players.items():
         # Filter props by the selected prop type
@@ -346,6 +339,14 @@ def render_team_props(
                 direction = value_indicator.value_direction
                 direction_display = direction.capitalize() if direction else "Neutral"
                 value_hint = f"{emoji} {direction_display}"
+
+                # Define value priority for sorting (Strong positive -> Positive -> Neutral -> Negative)
+                value_priority = {
+                    "strong positive": 1,
+                    "positive": 2,
+                    "neutral": 3,
+                    "negative": 4
+                }
 
                 # Add numerical sort value for proper sorting
                 sort_value = value_priority.get(
