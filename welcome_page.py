@@ -98,11 +98,11 @@ div[data-testid="stMarkdownContainer"] > div {
 """, unsafe_allow_html=True)
 
 # Title and introduction
-st.title("Welcome to NBA Analytics Hub", anchor=False)
+st.title("Welcome to Data-Driven Sportbetting Hub", anchor=False)
 
 st.markdown("""
 <div style="font-size: 30px; margin-bottom: 30px;">
-<p>Your all-in-one destination for NBA statistics and betting insights</p>
+<p>Your comprehensive destination for NBA & WNBA analytics and betting insights</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -110,6 +110,7 @@ st.markdown("""
 # Main features section
 st.header("Explore Features", anchor=False)
 
+# First row: NBA and WNBA betting odds
 col1, col2 = st.columns(2)
 
 with col1:
@@ -117,76 +118,129 @@ with col1:
         col1_1, col1_2 = st.columns([1, 1], vertical_alignment="center")
         with col1_1:
             st.markdown("""
-            <h3 style="font-size: 24px; font-weight: 600;">📊Statistics Visualizer-Playoff</h3>
+            <h3 style="font-size: 22px; font-weight: 600;">⛹️‍♂️ NBA Betting Odds</h3>
             """, unsafe_allow_html=True)
         with col1_2:
-            st.page_link("nba_playoff_stats_visualizer/playoff_visualizer_page.py",
-                         label="Show me")
+            st.page_link("betting_odds/nba_betting_odds_page.py",
+                         label="Show NBA")
 
         st.markdown("""
-        <div style="font-size: 24px; background-color: #f0f2f6; padding: 20px; border-radius: 10px; min-height: 300px; height: auto; overflow: auto;">
-            <h3 style="color: #0066cc;">Detailed Team & Player Insights</h3>
+        <div style="font-size: 20px; background-color: #f0f2f6; padding: 20px; border-radius: 10px; min-height: 280px; height: auto; overflow: auto;">
+            <h4 style="color: #0066cc;">🟢 Real-Time Odds Analysis: 2024-25 PlayOff</h4>
             <ul>
-                <li>Game-by-game performance breakdowns</li>
-                <li>Player statistics with interactive charts</li>
-                <li>Historical playoff data dating back to 2015</li>
-                <li>Key performance trends to inform your betting</li>
+                <li>Real-time odds comparison</li>
+                <li>Major sportsbooks coverage</li>
+                <li>Line movement tracking</li>
+                <li>Player prop insights</li>
+                <li>Value betting opportunities</li>
             </ul>
+            <p style="font-weight: bold; font-size: 16px; margin-top: 20px; color: #28a745;">
+            Stay ahead of the market with live betting data.
+            </p>
         </div>
         """, unsafe_allow_html=True)
-
 
 with col2:
     with st.container():
         col2_1, col2_2 = st.columns([1, 1], vertical_alignment="center")
         with col2_1:
             st.markdown("""
-            <h3 style="font-size: 24px; font-weight: 600;"> 🟢 LIVE: Betting Odds Analysis</h3>
+            <h3 style="font-size: 22px; font-weight: 600;">⛹️‍♀️ WNBA Betting Odds</h3>
             """, unsafe_allow_html=True)
         with col2_2:
-            st.page_link("betting_odds/betting_odds_page.py",
-                         label="Show me")
+            st.page_link("betting_odds/wnba_betting_odds_page.py",
+                         label="Show WNBA")
+
         st.markdown("""
-        <div style="font-size: 24px; background-color: #f0f2f6; padding: 20px; border-radius: 10px; min-height: 300px; height: auto; overflow: auto;">
-            <h4 style="color: #0066cc;">Real-time Odds Comparison</h4>
+        <div style="font-size: 20px; background-color: #f0f2f6; padding: 20px; border-radius: 10px; min-height: 280px; height: auto; overflow: auto;">
+            <h4 style="color: #0066cc;">🟢 Real-Time Odds Analysis: **2025 Regular** </h4>
             <ul>
-                <li>Compare odds across major sportsbooks</li>
-                <li>Track line movements to spot value</li>
-                <li>Player prop betting insights</li>
+                <li>Real-time odds comparison</li>
+                <li>Major sportsbooks coverage</li>
+                <li>Line movement tracking</li>
+                <li>Player prop insights</li>
+                <li>Value betting opportunities</li>
             </ul>
-            <p style="font-weight: bold; font-size: 18px; margin-top: 30px;">
-            Make more informed betting decisions by combining statistical data with real-time odds.
+            <p style="font-weight: bold; font-size: 16px; margin-top: 20px; color: #28a745;">
+            Stay ahead of the market with live betting data.
             </p>
         </div>
         """, unsafe_allow_html=True)
+
+# Second row: Playoff Visualizer (first column)
+st.markdown("<br>", unsafe_allow_html=True)
+col3, col4 = st.columns(2)
+with col3:
+    with st.container():
+        col3_1, col3_2 = st.columns([1, 1], vertical_alignment="center")
+        with col3_1:
+            st.markdown("""
+            <h3 style="font-size: 22px; font-weight: 600;">📊 Playoff Visualizer</h3>
+            """, unsafe_allow_html=True)
+        with col3_2:
+            st.page_link("nba_playoff_stats_visualizer/playoff_visualizer_page.py",
+                         label="Analyze Data")
+
+        st.markdown("""
+        <div style="font-size: 20px; background-color: #e6f3ff; padding: 20px; border-radius: 10px; min-height: 280px; height: auto; overflow: auto;">
+            <h4 style="color: #0066cc;">Deep Statistical Analysis</h4>
+            <ul>
+                <li>Game-by-game breakdowns</li>
+                <li>Interactive performance charts</li>
+                <li>Historical playoff data (2015+)</li>
+                <li>Player & team analytics</li>
+                <li>Trend identification</li>
+            </ul>
+            <p style="font-weight: bold; font-size: 16px; margin-top: 20px; color: #0066cc;">
+            Make informed decisions with data-driven insights.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+with col4:
+    # Empty column for future features
+    st.empty()
 
 # Getting started section
 st.header("Getting Started")
 st.markdown("""
 <div style="font-size: 17px; margin-bottom: 20px;">
-<p>To begin exploring the app, use the navigation in the sidebar to select which section you'd like to view:</p>
+<p>Navigate through our comprehensive sports betting platform using the sidebar menu:</p>
 <ol>
-    <li><strong>Playoff Visualizer</strong> - Deep dive into playoff statistics and performance metrics</li>
-    <li><strong>Betting Odds</strong> - Explore and compare current betting lines and odds</li>
+    <li><strong>NBA Betting Odds</strong> - Live NBA lines, odds comparison, and market analysis</li>
+    <li><strong>WNBA Betting Odds</strong> - Complete WNBA betting insights and opportunities</li>
+    <li><strong>Playoff Visualizer</strong> - In-depth statistical analysis for both leagues</li>
 </ol>
+<p style="margin-top: 15px; font-weight: 600;">
+🎯 <em>Combine real-time odds with historical performance data for smarter betting decisions.</em>
+</p>
 </div>
 """, unsafe_allow_html=True)
 
 # About section
 st.markdown("---")
-st.subheader("About This Tool")
+st.subheader("About This Platform")
 st.markdown("""
 <div style="font-size: 16px;">
-<p>This NBA Playoff Analytics Hub is built for sports bettors and NBA enthusiasts who want to make data-driven decisions. 
-All statistics are sourced directly from official NBA data.</p>
+<p>Our Data-Driven Sportbetting Hub serves both NBA and WNBA enthusiasts who demand comprehensive analytics. 
+We combine official league statistics with real-time betting market data to give you the competitive edge.</p>
 
-<p>Have questions or suggestions? Use the feedback form in the sidebar to let me know how we can improve!</p>
+<p><strong>Key Benefits:</strong></p>
+<ul>
+    <li>✅ Real-time odds from multiple sportsbooks</li>
+    <li>✅ Historical performance analytics</li>
+    <li>✅ Both NBA and WNBA coverage</li>
+    <li>✅ Mobile-responsive design</li>
+    <li>✅ Data-driven insights</li>
+</ul>
+
+<p>Have questions or suggestions? Use the feedback form in the sidebar to help us improve your experience!</p>
 </div>
 """, unsafe_allow_html=True)
 
 # Add attribution footer
 st.markdown("---")
 st.markdown(
-    "<div style='text-align: center; color: gray; font-size: 0.8em;'>Data provided by NBA API. Application created by Yi-An T.</div>",
+    "<div style='text-align: center; color: gray; font-size: 0.8em;'>Data provided by NBA & WNBA APIs • Sports betting odds from multiple sources • Platform created by Yi-An T.</div>",
     unsafe_allow_html=True
 )
