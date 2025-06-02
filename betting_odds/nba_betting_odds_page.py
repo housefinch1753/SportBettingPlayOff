@@ -25,7 +25,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-database = get_database()
+database = get_database('nba')
 
 # Initialize service
 matchup_service = MatchupService(database)

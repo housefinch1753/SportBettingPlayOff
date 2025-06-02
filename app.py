@@ -24,12 +24,16 @@ st.set_page_config(
 # Define pages using st.Page
 welcome_page = st.Page("welcome_page.py", title="Welcome", icon="👋")
 visualizer_page = st.Page(
-    "nba_playoff_stats_visualizer/playoff_visualizer_page.py", title="Playoff Visualizer", icon="📊")
-odds_page = st.Page("betting_odds/betting_odds_page.py",
-                    title="Betting Odds", icon="💰")
+    "nba_playoff_stats_visualizer/playoff_visualizer_page.py", title="NBA Playoff Visualizer", icon="📊")
+nba_odds_page = st.Page("betting_odds/nba_betting_odds_page.py",
+                        title="NBA Betting Odds", icon="⛹️‍♂️")
+
+wnba_odds_page = st.Page("betting_odds/wnba_betting_odds_page.py",
+                         title="WNBA Betting Odds", icon="⛹️‍♀️")
 
 # Set up the navigation
-nav = st.navigation([welcome_page, visualizer_page, odds_page])
+nav = st.navigation([welcome_page, nba_odds_page,
+                     wnba_odds_page, visualizer_page])
 
 # Render the feedback sidebar on all pages
 render_feedback_sidebar()
