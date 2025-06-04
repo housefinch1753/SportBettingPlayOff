@@ -176,8 +176,7 @@ def main():
 
         # Get stats for all players for the selected matchup
         list_of_players = list(player_props_by_name.keys())
-        stats_summary_by_name = calculate_summary_stats_for_players(
-            list_of_players, '2024-25', SeasonTypeAllStar.playoffs)
+        stats_summary_by_name = calculate_summary_stats_for_players(list_of_players, '2025', SeasonTypeAllStar.regular)
 
         # Create tabs for home and away teams
         home_tab, away_tab = st.tabs(
