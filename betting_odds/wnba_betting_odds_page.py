@@ -114,9 +114,6 @@ def main():
     st.markdown("""
     <div style="font-size: 18px;">
     <h3 style="font-size: 28px;">💰 Matchup-Centric Value Overview</h3>
-
-    <p>Select a matchup to view all participating players with their key prop odds and value indicators. 
-    Compare the lines against player averages to identify potential betting opportunities.</p>
     </div>
     """, unsafe_allow_html=True)
 
