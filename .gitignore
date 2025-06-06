@@ -4,3 +4,5 @@
 .vscode
 
 .streamlit/secrets.toml
+
+performance_analysis

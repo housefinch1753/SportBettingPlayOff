@@ -39,7 +39,7 @@ def main():
     st.title("NBA Player Props Hub - BETA version", anchor=False)
 
     # New explanation of Value Direction
-    with st.expander("ℹ️ **Understanding Value Indicators**",expanded=True):
+    with st.expander("ℹ️ **Understanding Value Indicators**", expanded=True):
         st.markdown("""
         <div style="font-size: 18px;">
         <h3 style="font-size: 24px;">📊 How Value Indicators Work</h3>
@@ -77,7 +77,6 @@ def main():
             example_df = pd.DataFrame(example_data)
             example_df["Line"] = example_df["Line"].round(1)
             st.table(example_df)
-
 
             st.markdown("""
             <div style="font-size: 15px;">
@@ -121,7 +120,7 @@ def main():
     </div>
     """, unsafe_allow_html=True)
 
-    matchup_by_derived_name = get_future_matchup()
+    matchup_by_derived_name = get_nba_future_matchup()
 
     if not matchup_by_derived_name:
         st.warning("No upcoming matchups available.")
@@ -140,7 +139,8 @@ def main():
     with col2:
         selected_prop_type = st.selectbox(
             "Prop Type",
-            options=["Points", "--- MORE TO COME ---"] #, "Assists", "Rebounds", "Three Pointers Made"]
+            # , "Assists", "Rebounds", "Three Pointers Made"]
+            options=["Points", "--- MORE TO COME ---"]
         )
 
     with col3:
@@ -163,10 +163,13 @@ def main():
         st.subheader(f"Game Date: {game_date_str} UTC")
 
         # Get and display odds update information
-        latest_odds_time = matchup_service.get_latest_odds_update_time(selected_matchup)
+        latest_odds_time = matchup_service.get_latest_odds_update_time(
+            selected_matchup)
         if latest_odds_time:
-            odds_time_str = latest_odds_time.strftime("%A, %B %d, %Y, %I:%M %p")
-            st.info(f"❗ **Odds Last Retrieved:** {odds_time_str} UTC | Odds refresh every 6 hours before the game starts")
+            odds_time_str = latest_odds_time.strftime(
+                "%A, %B %d, %Y, %I:%M %p")
+            st.info(
+                f"❗ **Odds Last Retrieved:** {odds_time_str} UTC | Odds refresh every 6 hours before the game starts")
         else:
             st.warning("⚠️ No odds data available for this matchup")
 
@@ -176,7 +179,7 @@ def main():
 
         # Get stats for all players for the selected matchup
         list_of_players = list(player_props_by_name.keys())
-        stats_summary_by_name = calculate_summary_stats_for_players(
+        stats_summary_by_name = calculate_nba_summary_stats_for_players(
             list_of_players, '2024-25', SeasonTypeAllStar.playoffs)
 
         # Create tabs for home and away teams
@@ -185,7 +188,7 @@ def main():
 
         # Filter players for home team and away team
         # Get team by player name mapping
-        team_by_player_name = get_team_by_player_name()
+        team_by_player_name = get_nba_team_by_player_name()
         home_team_players, away_team_players = filter_player_props_by_team(
             player_props_by_name=player_props_by_name,
             team_by_player_name=team_by_player_name,
@@ -215,21 +218,21 @@ def main():
 
 
 @st.cache_data(ttl=86400)
-def get_team_by_player_name() -> dict[str, str]:
-    """Get team by player name."""
+def get_nba_team_by_player_name() -> dict[str, str]:
+    """Get team by player name for NBA."""
     team_by_player_name = player_stats_service.query_all_players_team()
     return team_by_player_name
 
 
 @st.cache_data(ttl=3600)
-def get_future_matchup() -> Optional[dict[str, Matchup]]:
+def get_nba_future_matchup() -> Optional[dict[str, Matchup]]:
     """Get list of upcoming NBA events."""
     matchup_by_derived_name = event_repository.get_future_events()
     return matchup_by_derived_name
 
 
 @st.cache_resource(ttl=3600)
-def calculate_summary_stats_for_players(list_of_players: list[str], season, season_type) -> dict[str, PlayerStatsSummary]:
+def calculate_nba_summary_stats_for_players(list_of_players: list[str], season, season_type) -> dict[str, PlayerStatsSummary]:
     player_stats_by_name = player_stats_service.query_player_stats(
         list_of_players, season, season_type)
     stats_summary_by_name = player_stats_service.summarize_player_stats(
@@ -292,7 +295,6 @@ def render_team_props(
     if not team_players:
         st.info(f"No player props available for {team_name}")
         return
-
 
     for player_name, props in team_players.items():
         # Filter props by the selected prop type
