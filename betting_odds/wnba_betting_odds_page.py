@@ -15,9 +15,13 @@ from betting_odds.services.matchup_service import MatchupService
 from betting_odds.services.player_stats_service import PlayerStatsService
 from betting_odds.services.prop_organiser import get_best_bookie_odds_for_each_prop_type_for_a_player
 from database.utils import get_database
+from ui_component.style_utils import load_css
 
 # Configure logging
 logger = logging.getLogger(__name__)
+
+# Load CSS styles
+load_css()
 
 # Hide the st.markdown anchor icon
 st.markdown(
@@ -215,6 +219,11 @@ def main():
                 selected_metric_type=selected_metric_type,
                 stats_summary_by_name=stats_summary_by_name
             )
+
+    # Add floating button at the bottom (after all content)
+    if st.button("📊 View Player Stats Analysis"):
+        st.switch_page(
+            "wnba_player_stats_visualizer/wnba_player_stats_page.py")
 
 
 @st.cache_data(ttl=86400)

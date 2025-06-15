@@ -1,7 +1,6 @@
 """
 Utility functions for database access.
 """
-from database.config import DEFAULT_DB_CONNECTION_STRING
 from database.database import Database
 
 # Singleton database instances for each schema
@@ -24,6 +23,7 @@ def get_database(schema: str, connection_string=None, echo=False):
 
     # Use default connection string if none provided
     if connection_string is None:
+        from database.config import DEFAULT_DB_CONNECTION_STRING
         connection_string = DEFAULT_DB_CONNECTION_STRING
 
     # Create new instance if needed for this schema
