@@ -218,7 +218,7 @@ with col4:
                 <li>Performance trends analysis</li>
                 <li>Advanced metrics breakdown</li>
             </ul>
-            <p style="font-weight: bold; font-size: 16px; margin-top: 20px; color: #28a745;">
+            <p style="font-weight: bold; font-size: 16px; margin-top: 20px; color: #0066cc;">
             Dive deep into player performance data and trends.
             </p>
         </div>
