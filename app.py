@@ -31,9 +31,13 @@ nba_odds_page = st.Page("betting_odds/nba_betting_odds_page.py",
 wnba_odds_page = st.Page("betting_odds/wnba_betting_odds_page.py",
                          title="WNBA Betting Odds", icon="⛹️‍♀️")
 
+wnba_player_stats_page = st.Page("wnba_player_stats_visualizer/wnba_player_stats_page.py",
+                                 title="WNBA Player Stats", icon="📊") 
+
+
 # Set up the navigation
 nav = st.navigation([welcome_page, nba_odds_page,
-                     wnba_odds_page, visualizer_page])
+                     wnba_odds_page, visualizer_page, wnba_player_stats_page])
 
 # Render the feedback sidebar on all pages
 render_feedback_sidebar()

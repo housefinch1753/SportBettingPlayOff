@@ -198,8 +198,31 @@ with col3:
         """, unsafe_allow_html=True)
 
 with col4:
-    # Empty column for future features
-    st.empty()
+    with st.container():
+        col4_1, col4_2 = st.columns([1, 1], vertical_alignment="center")
+        with col4_1:
+            st.markdown("""
+            <h3 style="font-size: 22px; font-weight: 600;">📊 WNBA Player Stats</h3>
+            """, unsafe_allow_html=True)
+        with col4_2:
+            st.page_link("wnba_player_stats_visualizer/wnba_player_stats_page.py",
+                         label="View Stats")
+
+        st.markdown("""
+        <div style="font-size: 20px; background-color: #e6f3ff; padding: 20px; border-radius: 10px; min-height: 280px; height: auto; overflow: auto;">
+            <h4 style="color: #0066cc;">Player Performance Analytics</h4>
+            <ul>
+                <li>Season statistics tracking</li>
+                <li>Point/rebound/assist/three-pointer/steal/block/turnover insights</li>
+                <li>Home/Away Performance Analysis</li>
+                <li>Performance trends analysis</li>
+                <li>Advanced metrics breakdown</li>
+            </ul>
+            <p style="font-weight: bold; font-size: 16px; margin-top: 20px; color: #0066cc;">
+            Dive deep into player performance data and trends.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
 
 # Getting started section
 st.header("Getting Started")
