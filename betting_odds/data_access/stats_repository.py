@@ -57,6 +57,7 @@ class StatsRepository:
                     'player_id': game.player_id,
                     'game_id': game.game_id,
                     'game_date': game.game_date,
+                    'matchup': game.matchup,
                     'season': game.season,
                     'season_type': game.season_type,
                     'points': game.points,
