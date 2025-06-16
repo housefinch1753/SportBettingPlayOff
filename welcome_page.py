@@ -213,9 +213,10 @@ with col4:
             <h4 style="color: #0066cc;">Player Performance Analytics</h4>
             <ul>
                 <li>Season statistics tracking</li>
+                <li>Point/rebound/assist/three-pointer/steal/block/turnover insights</li>
+                <li>Home/Away Performance Analysis</li>
                 <li>Performance trends analysis</li>
                 <li>Advanced metrics breakdown</li>
-                <li>Statistical significance testing</li>
             </ul>
             <p style="font-weight: bold; font-size: 16px; margin-top: 20px; color: #28a745;">
             Dive deep into player performance data and trends.
