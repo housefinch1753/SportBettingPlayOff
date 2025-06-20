@@ -1,3 +1,25 @@
+"""
+WNBA Player Home/Away Performance Analysis Module
+
+This module provides comprehensive statistical analysis tools for comparing
+WNBA player performance in home vs away games. It includes:
+
+- Statistical significance testing using t-tests
+- Distribution analysis with kernel density estimation
+- Probability calculations for betting insights
+- Interactive visualizations using Plotly
+- Summary statistics and performance metrics
+
+The module is designed to help users make data-driven decisions for
+sports betting by identifying statistically significant performance differences
+between home and away games.
+
+Requirements:
+- Minimum 10 minutes played per game
+- Minimum 10 games for analysis
+- Statistical significance threshold: p < 0.05
+"""
+
 import numpy as np
 import plotly.graph_objects as go
 import streamlit as st
@@ -15,20 +37,31 @@ database = get_database('wnba')
 stats_repository = StatsRepository(database)
 
 
-def _analyze_player_home_away(player_name: str, stat_name: str, season: str = "2024", season_type: str = SeasonTypeAllStar.regular) -> dict:
+def _analyze_player_home_away(player_name: str, stat_name: str, season: str, season_type: str) -> dict:
     """
     Analyze home/away performance for a player in a specific stat.
 
     Args:
-        player_id: The player's ID
+        player_name: The player's name
         stat_name: The stat to analyze (points, assists, rebounds, three_pointers_made)
-        season: The season to analyze (default: "2024")
-        season_type: The type of season (default: regular season)
+        season: The season to analyze (e.g., "2024")
+        season_type: The type of season (regular or playoffs)
 
     Returns:
-        Tuple containing:
-        - Dictionary with analysis results
-        - Boolean indicating if analysis was successful
+        Dictionary containing analysis results with the following keys:
+        - home_games: Number of home games analyzed
+        - away_games: Number of away games analyzed
+        - home_mean: Average stat value for home games
+        - away_mean: Average stat value for away games
+        - home_std: Standard deviation for home games
+        - away_std: Standard deviation for away games
+        - t_statistic: T-test statistic
+        - p_value: P-value from t-test
+        - significant: Boolean indicating if difference is statistically significant (p < 0.05)
+        - better_at: String indicating where player performs better ('home' or 'away')
+        - difference: Absolute difference between home and away means
+
+        Returns empty dict if insufficient data for analysis.
     """
     # Get player stats
     player_stats_df = stats_repository.query_player_stats(
@@ -79,13 +112,24 @@ def _analyze_player_home_away(player_name: str, stat_name: str, season: str = "2
 
 def display_significant_test(player_name: str, stat_name: str, season: str, season_type: str):
     """
-    Display the significant test results in a user-friendly way using Streamlit.
+    Display comprehensive home/away performance analysis for a WNBA player.
+
+    This function performs statistical analysis comparing a player's performance
+    in home vs away games and presents the results with interactive visualizations
+    including distribution plots and probability analysis.
 
     Args:
-        player_name: The player's name
-        stat_name: The stat to analyze
-        season: The season to analyze
-        season_type: The type of season
+        player_name: The player's name to analyze
+        stat_name: The statistic to analyze (points, assists, rebounds, three_pointers_made)
+        season: The season to analyze (e.g., "2024")
+        season_type: The type of season (regular or playoffs)
+
+    Features:
+        - Statistical significance testing using t-test
+        - Distribution comparison plots (KDE)
+        - Probability analysis for custom ranges
+        - Summary statistics for home and away games
+        - Interactive probability calculations for betting insights
     """
 
     result = _analyze_player_home_away(
@@ -98,7 +142,6 @@ def display_significant_test(player_name: str, stat_name: str, season: str, seas
 
     # Create a container for the results
     with st.container():
-        st.subheader(f"{player_name}'s {stat_name.title()} Home/Away Analysis")
 
         # Display significance
         if result['significant']:
@@ -118,9 +161,9 @@ def display_significant_test(player_name: str, stat_name: str, season: str, seas
                                          >= MIN_MINUTES]
         filtered_stats['is_away'] = filtered_stats['matchup'].str.contains('@')
         home_stats = filtered_stats[~filtered_stats['is_away']
-        ][stat_name].values
+                                    ][stat_name].values
         away_stats = filtered_stats[filtered_stats['is_away']
-        ][stat_name].values
+                                    ][stat_name].values
 
         # Calculate the area under the curve for probability
         def calculate_probability(kde, x_min, x_max):
@@ -223,22 +266,34 @@ def display_significant_test(player_name: str, stat_name: str, season: str, seas
         # Calculate overall probability (weighted by number of games)
         total_games = result['home_games'] + result['away_games']
         overall_prob = (
-                               home_prob * result['home_games'] + away_prob * result['away_games']) / total_games
+            home_prob * result['home_games'] + away_prob * result['away_games']) / total_games
 
-        # Display probabilities
-        if under_value:
-            st.markdown(f"""
-            **Probability Analysis for {stat_name} under {under_value}:**
-            """)
-
-        elif over_value:
-            st.markdown(f"""
-            **Probability Analysis for {stat_name} over {over_value}:**
-            """)
         a, b, c = st.columns(3)
-        a.metric("Home Games", f"{home_prob:.1%}", border=True)
-        b.metric("Away Games", f"{away_prob:.1%}", border=True)
-        c.metric("Overall", f"{overall_prob:.1%}", border=True)
+
+        # Home Games metric with blue styling
+        a.markdown(f"""
+        <div style="background-color: #e6f3ff; padding: 10px; border-radius: 5px; border-left: 4px solid #0066cc;">
+            <div style="color: #0066cc; font-weight: bold; font-size: 14px;">Home Games</div>
+            <div style="color: #0066cc; font-size: 24px; font-weight: bold;">{home_prob:.1%}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Away Games metric with red styling
+        b.markdown(f"""
+        <div style="background-color: #ffe6e6; padding: 10px; border-radius: 5px; border-left: 4px solid #cc0000;">
+            <div style="color: #cc0000; font-weight: bold; font-size: 14px;">Away Games</div>
+            <div style="color: #cc0000; font-size: 24px; font-weight: bold;">{away_prob:.1%}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Overall metric with neutral styling
+        c.markdown(f"""
+        <div style="background-color: #f0f2f6; padding: 10px; border-radius: 5px; border-left: 4px solid #666666;">
+            <div style="color: #666666; font-weight: bold; font-size: 14px;">Overall</div>
+            <div style="color: #666666; font-size: 24px; font-weight: bold;">{overall_prob:.1%}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
         # Display statistical metrics in columns
         col1, col2 = st.columns(2)
 
