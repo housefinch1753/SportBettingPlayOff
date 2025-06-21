@@ -75,7 +75,6 @@ if player_name and selected_stat:
     # Create the checkbox with callback
     all_selected = st.checkbox(
         "Select All Seasons",
-        value=st.session_state.all_selected,
         key="all_selected",
         on_change=toggle_all_selection
     )
@@ -106,7 +105,6 @@ if player_name and selected_stat:
             seasons=selected_seasons,  # Pass all selected seasons
             season_type=season_type_options[selected_season_type]
         )
-
 
     # Single season selection for significant test
     selected_season = st.selectbox(
