@@ -39,10 +39,60 @@ class StatsRepository:
         """
         session = self.database.get_session()
         try:
+            logger.info(f"Querying {player_name} stats for season: {season} and type: {season_type}")
             query = session.query(GameStatsORM).join(
                 PlayerORM).filter(PlayerORM.name == player_name)
 
             query = query.filter(GameStatsORM.season == season)
+
+            query = query.filter(GameStatsORM.season_type == season_type)
+
+            # Execute query and get results
+            results = query.all()
+
+            # Convert to dictionary and then to DataFrame
+            data = []
+            for game in results:
+                game_dict = {
+                    'player_name': player_name,
+                    'player_id': game.player_id,
+                    'game_id': game.game_id,
+                    'game_date': game.game_date,
+                    'matchup': game.matchup,
+                    'season': game.season,
+                    'season_type': game.season_type,
+                    'points': game.points,
+                    'assists': game.assists,
+                    'rebounds': game.rebounds,
+                    'three_pointers_made': game.three_pointers_made,
+                    'minutes': game.minutes,
+                }
+                data.append(game_dict)
+
+            return pd.DataFrame(data)
+
+        finally:
+            session.close()
+
+    def query_all_player_stats(self, player_name: str, season_type: str) -> pd.DataFrame:
+        """
+        Query all available seasons for a player in a single call
+
+        This method is optimized for interactive use where users may add/remove
+        seasons dynamically. The data is cached and filtered in Python.
+
+        Args:
+            player_name: The player's name
+            season_type: The type of season (regular or playoffs)
+
+        Returns:
+        - DataFrame with query results for all available seasons
+        """
+        session = self.database.get_session()
+        try:
+            logger.info(f"Querying {player_name} all stats for all seasons.")
+            query = session.query(GameStatsORM).join(
+                PlayerORM).filter(PlayerORM.name == player_name)
 
             query = query.filter(GameStatsORM.season_type == season_type)
 
