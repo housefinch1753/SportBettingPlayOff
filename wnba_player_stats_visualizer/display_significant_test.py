@@ -36,6 +36,16 @@ MIN_GAMES = 10  # Minimum number of games required for analysis
 database = get_database('wnba')
 stats_repository = StatsRepository(database)
 
+# Cache the player stats query to avoid repeated database calls
+@st.cache_data(ttl=3600 * 24)  # Cache for 24 hours
+def get_cached_player_stats_for_home_away_analysis(player_name: str, season: str, season_type: str):
+    """Get cached player stats from the database."""
+    return stats_repository.query_player_stats(
+        player_name=player_name,
+        season=season,
+        season_type=season_type
+    )
+
 
 def _analyze_player_home_away(player_name: str, stat_name: str, season: str, season_type: str) -> dict:
     """
@@ -63,8 +73,8 @@ def _analyze_player_home_away(player_name: str, stat_name: str, season: str, sea
 
         Returns empty dict if insufficient data for analysis.
     """
-    # Get player stats
-    player_stats_df = stats_repository.query_player_stats(
+    # Get player stats using cached function
+    player_stats_df = get_cached_player_stats_for_home_away_analysis(
         player_name=player_name,
         season=season,
         season_type=season_type
@@ -152,7 +162,7 @@ def display_significant_test(player_name: str, stat_name: str, season: str, seas
                 f"No statistically significant difference found (p-value: {result['p_value']:.4f})")
 
         # Get the raw data for distribution plot
-        player_stats_df = stats_repository.query_player_stats(
+        player_stats_df = get_cached_player_stats_for_home_away_analysis(
             player_name=player_name,
             season=season,
             season_type=season_type
