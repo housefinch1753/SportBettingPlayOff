@@ -416,9 +416,6 @@ def render_team_props(
                 # Display information about sorting
                 st.info("Click on column headers to sort")
 
-                # Calculate a more precise height to avoid empty rows
-                precise_height = (len(df) * 25)
-
                 # Add row IDs for tracking
                 df['ID'] = [f"{player_name}_{i}" for i in range(len(df))]
 
@@ -444,13 +441,12 @@ def render_team_props(
                         "Over/Under": st.column_config.TextColumn("Over/Under"),
                         "Best Bookie": st.column_config.TextColumn("Best Bookie"),
                         "Best Odds": st.column_config.NumberColumn("Best Odds", format="%.2f"),
-                        "Value": st.column_config.TextColumn("Value"),
+                        "Value Indicator": st.column_config.TextColumn("Value Indicator"),
                         "Notes": st.column_config.TextColumn("(Upcoming Feature) Your Notes", width="medium"),
                     },
                     hide_index=True,
                     use_container_width=True,
                     num_rows="fixed",
-                    height=precise_height,
                     disabled=["Line", "Over/Under",
                               "Best Bookie", "Best Odds", "Value Indicator", "Notes"]
                 )
